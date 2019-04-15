@@ -4,6 +4,7 @@
     {
         Branca,
         Preta,
+        Cinza,
         Vermelha,
         Laranja,
         Amarela,
