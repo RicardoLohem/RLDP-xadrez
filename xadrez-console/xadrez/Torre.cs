@@ -8,6 +8,11 @@ namespace xadrez
         {
         }
 
+        public override bool[,] movPossiveis()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override string ToString()
         {
             return "T";
