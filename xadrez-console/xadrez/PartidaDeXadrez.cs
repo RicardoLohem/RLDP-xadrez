@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using tabuleiro;
 
 namespace xadrez
@@ -9,6 +9,8 @@ namespace xadrez
         public int turno { get; private set; }
         public Cor jogadorAtual { get; private set; }
         public bool fim { get; private set; }
+        private HashSet<Peca> pecas;
+        private HashSet<Peca> capturadas;
 
         public PartidaDeXadrez()
         {
@@ -16,6 +18,8 @@ namespace xadrez
             turno = 1;
             jogadorAtual = Cor.Branca;
             fim = false;
+            pecas = new HashSet<Peca>();
+            capturadas = new HashSet<Peca>();
             poePecas();
         }
 
@@ -25,6 +29,10 @@ namespace xadrez
             p.plusQteMovimentos();
             Peca pecaCapturada = tabu.tiraPeca(destino);
             tabu.porPeca(p, destino);
+            if (pecaCapturada != null)
+            {
+                capturadas.Add(pecaCapturada);
+            }
         }
 
         public void fazJogada(Posicao origem, Posicao destino)
@@ -65,7 +73,7 @@ namespace xadrez
         {
             if (jogadorAtual == Cor.Branca)
             {
-                jogadorAtual = Cor.Preta;
+                jogadorAtual = Cor.Vermelha;
             }
             else
             {
@@ -73,21 +81,57 @@ namespace xadrez
             }
         }
 
+        public HashSet<Peca> pecasCap(Cor cor)
+        {
+            HashSet<Peca> aux = new HashSet<Peca>();
+            foreach (Peca x in capturadas)
+            {
+                if (x.cor == cor)
+                {
+                    aux.Add(x);
+
+                }
+            }
+            return aux;
+        }
+
+        public HashSet<Peca> pecasNoJogo(Cor cor)
+        {
+            HashSet<Peca> aux = new HashSet<Peca>();
+            foreach (Peca x in pecas)
+            {
+                if (x.cor == cor)
+                {
+                    aux.Add(x);
+
+                }
+            }
+            aux.ExceptWith(pecasCap(cor));
+            return aux;
+        }
+
+
+        public void porNovaPeca(char coluna, int linha, Peca peca)
+        {
+            tabu.porPeca(peca, new PosicaoXadrez(coluna, linha).toPosicao());
+            pecas.Add(peca);
+        }
+
         private void poePecas()
         {
-            tabu.porPeca(new Torre(tabu, Cor.Branca), new PosicaoXadrez('c', 1).toPosicao());
-            tabu.porPeca(new Torre(tabu, Cor.Branca), new PosicaoXadrez('c', 2).toPosicao());
-            tabu.porPeca(new Torre(tabu, Cor.Branca), new PosicaoXadrez('d', 2).toPosicao());
-            tabu.porPeca(new Torre(tabu, Cor.Branca), new PosicaoXadrez('e', 2).toPosicao());
-            tabu.porPeca(new Torre(tabu, Cor.Branca), new PosicaoXadrez('e', 1).toPosicao());
-            tabu.porPeca(new Rei(tabu, Cor.Branca), new PosicaoXadrez('d', 1).toPosicao());
+            porNovaPeca('c', 1, new Torre(tabu, Cor.Branca));
+            porNovaPeca('c', 2, new Torre(tabu, Cor.Branca));
+            porNovaPeca('d', 2, new Torre(tabu, Cor.Branca));
+            porNovaPeca('e', 2, new Torre(tabu, Cor.Branca));
+            porNovaPeca('e', 1, new Torre(tabu, Cor.Branca));
+            porNovaPeca('d', 1, new Rei(tabu, Cor.Branca));
 
-            tabu.porPeca(new Torre(tabu, Cor.Vermelha), new PosicaoXadrez('c', 7).toPosicao());
-            tabu.porPeca(new Torre(tabu, Cor.Vermelha), new PosicaoXadrez('c', 8).toPosicao());
-            tabu.porPeca(new Torre(tabu, Cor.Vermelha), new PosicaoXadrez('d', 7).toPosicao());
-            tabu.porPeca(new Torre(tabu, Cor.Vermelha), new PosicaoXadrez('e', 7).toPosicao());
-            tabu.porPeca(new Torre(tabu, Cor.Vermelha), new PosicaoXadrez('e', 8).toPosicao());
-            tabu.porPeca(new Rei(tabu, Cor.Vermelha), new PosicaoXadrez('d', 8).toPosicao());
+            porNovaPeca('c', 7, new Torre(tabu, Cor.Vermelha));
+            porNovaPeca('c', 8, new Torre(tabu, Cor.Vermelha));
+            porNovaPeca('d', 7, new Torre(tabu, Cor.Vermelha));
+            porNovaPeca('e', 7, new Torre(tabu, Cor.Vermelha));
+            porNovaPeca('e', 8, new Torre(tabu, Cor.Vermelha));
+            porNovaPeca('d', 8, new Rei(tabu, Cor.Vermelha));
         }
     }
 }

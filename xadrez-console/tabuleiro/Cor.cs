@@ -3,7 +3,6 @@
     enum Cor
     {
         Branca,
-        Preta,
         Cinza,
         Vermelha,
         Laranja,
