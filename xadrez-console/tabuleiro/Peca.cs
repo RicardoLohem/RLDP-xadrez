@@ -20,6 +20,11 @@
             qteMovimentos++;
         }
 
+        public void minusQteMovimentos()
+        {
+            qteMovimentos--;
+        }
+
         public bool haMovPossiveis()
         {
             bool[,] mat = movPossiveis();
