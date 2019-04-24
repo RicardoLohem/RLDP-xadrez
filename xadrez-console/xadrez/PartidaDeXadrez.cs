@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using tabuleiro;
+using xadrez;
 
-namespace xadrez
+namespace xadrez_console
 {
     class PartidaDeXadrez
     {
@@ -46,7 +47,6 @@ namespace xadrez
             {
                 tabu.porPeca(pecaCap, destino);
                 capturadas.Remove(pecaCap);
-                tabu.porPeca(p, origem);
             }
             tabu.porPeca(p, origem);
         }
@@ -61,7 +61,7 @@ namespace xadrez
                 throw new TabuleiroExcecao("Você não pode se por em xeque!");
             }
 
-            if (emXeque(inimiga(jogadorAtual)))
+            if (emXeque(inimigo(jogadorAtual)))
             {
                 xeque = true;
             }
@@ -69,8 +69,16 @@ namespace xadrez
             {
                 xeque = false;
             }
-            turno++;
-            trocaJogador();
+
+            if (testeXmate(inimigo(jogadorAtual)))
+            {
+                fim = true;
+            }
+            else
+            {
+                turno++;
+                trocaJogador();
+            }
         }
 
         public void valPosiOrigem(Posicao pos)
@@ -125,7 +133,7 @@ namespace xadrez
             return aux;
         }
 
-        private Cor inimiga(Cor cor)
+        private Cor inimigo(Cor cor)
         {
             if (cor == Cor.Branca)
             {
@@ -156,7 +164,7 @@ namespace xadrez
             {
                 throw new TabuleiroExcecao("Não tem rei da cor " + cor + " no tabuleiro!");
             }
-            foreach(Peca x in pecasNoJogo(inimiga(cor)))
+            foreach(Peca x in pecasNoJogo(inimigo(cor)))
             {
                 bool[,] mat = x.movPossiveis();
                 if (mat[R.posicao.linha, R.posicao.coluna])
@@ -166,6 +174,41 @@ namespace xadrez
             }
             return false;
         }
+
+        public bool testeXmate(Cor cor)
+        {
+            if (!emXeque(cor))
+            {
+                return false;
+            }
+
+            foreach (Peca x in pecasNoJogo(cor))
+            {
+                bool[,] mat = x.movPossiveis();
+                for (int i = 0; i < tabu.linhas; i++)
+                {
+                    for (int j = 0; j < tabu.colunas; j++)
+                    {
+                        if (mat[i, j])
+                        {
+							Posicao origem = x.posicao;
+                            Posicao destino = new Posicao(i, j);
+                            Peca pecaCap = fazMovimento(origem, destino);
+                            bool testeXmate = emXeque(cor);
+                            desfazMov(origem, destino, pecaCap);
+
+                            if (!testeXmate)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+
+            }
+            return true;
+        }
+
 
         public HashSet<Peca> pecasNoJogo(Cor cor)
         {
@@ -181,6 +224,7 @@ namespace xadrez
             aux.ExceptWith(pecasCap(cor));
             return aux;
         }
+
 
 
         public void porNovaPeca(char coluna, int linha, Peca peca)

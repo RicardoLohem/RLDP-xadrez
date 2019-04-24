@@ -1,5 +1,5 @@
 ﻿using tabuleiro;
-namespace xadrez
+namespace xadrez_console
 {
     class PosicaoXadrez
     {

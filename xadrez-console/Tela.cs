@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using tabuleiro;
-using xadrez;
+using xadrez_console;
 
-namespace xadrez
+namespace xadrez_console
 {
     class Tela
     {
@@ -14,11 +14,21 @@ namespace xadrez
             Console.WriteLine();
             printPecasCap(partida);
             Console.WriteLine();
-            Console.WriteLine("Turno: " + partida.turno );
-            Console.WriteLine("Aguardando jogada: " + partida.jogadorAtual);
-            if (partida.xeque)
+
+            Console.WriteLine("Turno: " + partida.turno);
+
+            if (!partida.fim)
             {
-                Console.WriteLine("XEQUE!");
+                Console.WriteLine("Aguardando jogada: " + partida.jogadorAtual);
+                if (partida.xeque)
+                {
+                    Console.WriteLine("XEQUE!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("XEQUEMATE!");
+                Console.WriteLine("Vencedor: " + partida.jogadorAtual);
             }
         }
 
@@ -56,7 +66,7 @@ namespace xadrez
                 Console.Write(8 - i + " ");
                 for (int j = 0; j < tabu.colunas; j++)
                 {
-                   Tela.imprimirPeca(tabu.peca(i, j));
+                   imprimirPeca(tabu.peca(i, j));
                 }
                 Console.WriteLine();
             }
@@ -82,7 +92,7 @@ namespace xadrez
                         Console.BackgroundColor = fundoPadrao;
                     }
 
-                    Tela.imprimirPeca(tabu.peca(i, j));
+                    imprimirPeca(tabu.peca(i, j));
                     Console.BackgroundColor = fundoPadrao;
 
                 }
