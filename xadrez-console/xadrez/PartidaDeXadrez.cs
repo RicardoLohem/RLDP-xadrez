@@ -235,19 +235,40 @@ namespace xadrez_console
 
         private void poePecas()
         {
-            porNovaPeca('c', 1, new Torre(tabu, Cor.Branca));
-            porNovaPeca('c', 2, new Torre(tabu, Cor.Branca));
-            porNovaPeca('d', 2, new Torre(tabu, Cor.Branca));
-            porNovaPeca('e', 2, new Torre(tabu, Cor.Branca));
-            porNovaPeca('e', 1, new Torre(tabu, Cor.Branca));
-            porNovaPeca('d', 1, new Rei(tabu, Cor.Branca));
+            porNovaPeca('a', 1, new Torre(tabu, Cor.Branca));
+            porNovaPeca('b', 1, new Cavalo(tabu, Cor.Branca));
+            porNovaPeca('c', 1, new Bispo(tabu, Cor.Branca));
+            porNovaPeca('d', 1, new Dama(tabu, Cor.Branca));
+            porNovaPeca('e', 1, new Rei(tabu, Cor.Branca));
+            porNovaPeca('f', 1, new Bispo(tabu, Cor.Branca));
+            porNovaPeca('g', 1, new Cavalo(tabu, Cor.Branca));
+            porNovaPeca('h', 1, new Torre(tabu, Cor.Branca));
+            porNovaPeca('a', 2, new Peao(tabu, Cor.Branca));
+            porNovaPeca('b', 2, new Peao(tabu, Cor.Branca));
+            porNovaPeca('c', 2, new Peao(tabu, Cor.Branca));
+            porNovaPeca('d', 2, new Peao(tabu, Cor.Branca));
+            porNovaPeca('e', 2, new Peao(tabu, Cor.Branca));
+            porNovaPeca('f', 2, new Peao(tabu, Cor.Branca));
+            porNovaPeca('g', 2, new Peao(tabu, Cor.Branca));
+            porNovaPeca('h', 2, new Peao(tabu, Cor.Branca));
 
-            porNovaPeca('c', 7, new Torre(tabu, Cor.Vermelha));
-            porNovaPeca('c', 8, new Torre(tabu, Cor.Vermelha));
-            porNovaPeca('d', 7, new Torre(tabu, Cor.Vermelha));
-            porNovaPeca('e', 7, new Torre(tabu, Cor.Vermelha));
-            porNovaPeca('e', 8, new Torre(tabu, Cor.Vermelha));
-            porNovaPeca('d', 8, new Rei(tabu, Cor.Vermelha));
+            porNovaPeca('a', 8, new Torre(tabu, Cor.Vermelha));
+            porNovaPeca('b', 8, new Cavalo(tabu, Cor.Vermelha));
+            porNovaPeca('c', 8, new Bispo(tabu, Cor.Vermelha));
+            porNovaPeca('d', 8, new Dama(tabu, Cor.Vermelha));
+            porNovaPeca('e', 8, new Rei(tabu, Cor.Vermelha));
+            porNovaPeca('f', 8, new Bispo(tabu, Cor.Vermelha));
+            porNovaPeca('g', 8, new Cavalo(tabu, Cor.Vermelha));
+            porNovaPeca('h', 8, new Torre(tabu, Cor.Vermelha));
+            porNovaPeca('a', 7, new Peao(tabu, Cor.Vermelha));
+            porNovaPeca('b', 7, new Peao(tabu, Cor.Vermelha));
+            porNovaPeca('c', 7, new Peao(tabu, Cor.Vermelha));
+            porNovaPeca('d', 7, new Peao(tabu, Cor.Vermelha));
+            porNovaPeca('e', 7, new Peao(tabu, Cor.Vermelha));
+            porNovaPeca('f', 7, new Peao(tabu, Cor.Vermelha));
+            porNovaPeca('g', 7, new Peao(tabu, Cor.Vermelha));
+            porNovaPeca('h', 7, new Peao(tabu, Cor.Vermelha));
+
         }
     }
 }
